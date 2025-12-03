@@ -8,7 +8,7 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 1500 }, // Gravité très élevée pour une descente très rapide et linéaire
             debug: false
         }
     },
@@ -328,6 +328,10 @@ function create() {
     player.setCollideWorldBounds(true); // Collision avec toutes les limites
     player.setDepth(70); // Joueur au premier plan, au-dessus de l'herbe et des nuages
     
+    // Désactiver la friction pour un mouvement linéaire et constant
+    player.setDrag(0, 0);
+    player.setFriction(0, 0);
+    
     // Collision entre le joueur et le sol
     this.physics.add.collider(player, ground);
     
@@ -519,19 +523,21 @@ function update() {
         canJump = true;
     }
     
-    // Mouvement horizontal (vitesse 3x plus rapide)
+    // Vélocité horizontale constante et linéaire (même vitesse en l'air et au sol) - 3x plus rapide
+    const horizontalSpeed = 1200; // Vitesse constante et contrôlée (3x plus rapide)
+    
     // Empêcher le mouvement si on est bloqué contre un mur
     if (cursors.left.isDown && !player.body.blocked.left) {
-        player.setVelocityX(-1200);
+        player.setVelocityX(-horizontalSpeed);
     } else if (cursors.right.isDown && !player.body.blocked.right) {
-        player.setVelocityX(1200);
+        player.setVelocityX(horizontalSpeed);
     } else {
         player.setVelocityX(0);
     }
     
-    // Saut amélioré - permet de sauter quand on est au sol
+    // Saut linéaire avec vélocité verticale très rapide - monte et descend très rapidement
     if (cursors.up.isDown && canJump && isOnGround) {
-        player.setVelocityY(-400);
+        player.setVelocityY(-900); // Saut très rapide pour monter rapidement
         canJump = false;
     }
     
