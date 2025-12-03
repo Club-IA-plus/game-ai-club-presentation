@@ -163,5 +163,8 @@ export function preload() {
     
     // Charger l'image Gemini pour le fond du niveau 1
     this.load.image('geminiBackgroundLevel1', 'images/Gemini_Generated_Image_ijzwwyijzwwyijzw.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 3
+    this.load.image('geminiBackgroundLevel3', 'images/Gemini_Generated_Image_jke5odjke5odjke5.png');
 }
 

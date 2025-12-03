@@ -23,6 +23,17 @@ export function createWorld(scene) {
     backgroundImageLevel1.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
     backgroundImageLevel1.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
+    // Ajouter l'image Gemini comme fond du niveau 3 (en arrière-plan)
+    const level3 = levels[2]; // Troisième niveau (index 2)
+    const level3StartX = level3.startX;
+    const level3EndX = level3.endX;
+    const level3Width = level3EndX - level3StartX;
+    const backgroundImageLevel3 = scene.add.image(level3StartX + level3Width / 2, height / 2, 'geminiBackgroundLevel3');
+    backgroundImageLevel3.setDisplaySize(level3Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel3.setOrigin(0.5, 0.5);
+    backgroundImageLevel3.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel3.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
     // Ajouter des nuages décoratifs sur toute la largeur du monde
     const clouds = scene.add.group();
     const numClouds = Math.floor(GameState.worldWidth / 200);
