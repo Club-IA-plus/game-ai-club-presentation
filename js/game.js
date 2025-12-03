@@ -273,6 +273,9 @@ function preload() {
     
     // Charger l'image Gemini pour le fond du niveau 2
     this.load.image('geminiBackground', 'Gemini_Generated_Image_sl5uytsl5uytsl5u.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 1
+    this.load.image('geminiBackgroundLevel1', 'Gemini_Generated_Image_ijzwwyijzwwyijzw.png');
 }
 
 function create() {
@@ -284,6 +287,17 @@ function create() {
     
     // Créer le fond avec un ciel dégradé (sur toute la largeur du monde)
     this.add.rectangle(0, 0, worldWidth, height, 0x87CEEB).setOrigin(0, 0);
+    
+    // Ajouter l'image Gemini comme fond du niveau 1 (en arrière-plan)
+    const level1 = levels[0]; // Premier niveau
+    const level1StartX = level1.startX;
+    const level1EndX = level1.endX;
+    const level1Width = level1EndX - level1StartX;
+    const backgroundImageLevel1 = this.add.image(level1StartX + level1Width / 2, height / 2, 'geminiBackgroundLevel1');
+    backgroundImageLevel1.setDisplaySize(level1Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel1.setOrigin(0.5, 0.5);
+    backgroundImageLevel1.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel1.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
     // Ajouter des nuages décoratifs sur toute la largeur du monde
     const clouds = this.add.group();
