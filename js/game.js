@@ -272,10 +272,10 @@ function preload() {
     mailboxGraphics.generateTexture('mailbox', 10, 30);
     
     // Charger l'image Gemini pour le fond du niveau 2
-    this.load.image('geminiBackground', 'Gemini_Generated_Image_sl5uytsl5uytsl5u.png');
+    this.load.image('geminiBackground', 'images/Gemini_Generated_Image_sl5uytsl5uytsl5u.png');
     
     // Charger l'image Gemini pour le fond du niveau 1
-    this.load.image('geminiBackgroundLevel1', 'Gemini_Generated_Image_ijzwwyijzwwyijzw.png');
+    this.load.image('geminiBackgroundLevel1', 'images/Gemini_Generated_Image_ijzwwyijzwwyijzw.png');
 }
 
 function create() {
