@@ -4,12 +4,14 @@ import { createWorld } from './world.js';
 import { createPlayer, updatePlayer } from './player.js';
 import { createLevelElements, updateLevelDisplay, checkLevelChanges } from './levels.js';
 import { handleLevel2Platforms } from './level2.js';
+import { createLevelMenu } from './menu.js';
 
 // Création de la scène principale
 function create() {
     createWorld(this);
     createPlayer(this);
     createLevelElements(this);
+    createLevelMenu(this);
 }
 
 // Mise à jour de la boucle de jeu

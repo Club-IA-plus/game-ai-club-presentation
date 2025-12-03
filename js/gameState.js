@@ -5,7 +5,6 @@ export const GameState = {
     canJump: true,
     currentLevelIndex: 0,
     levelTitleText: null,
-    levelDateText: null,
     ground: null,
     worldWidth: 0,
     platforms: null,

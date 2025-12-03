@@ -1,6 +1,7 @@
 import { levels } from './config.js';
 import { GameState } from './gameState.js';
 import { createLevel2Platforms } from './level2.js';
+import { updateLevelMenu } from './menu.js';
 
 // Mise à jour de l'affichage du niveau actuel
 export function updateLevelDisplay(scene) {
@@ -11,17 +12,15 @@ export function updateLevelDisplay(scene) {
     GameState.levelTitleText.setText(currentLevel.name);
     GameState.levelTitleText.setPosition(width / 2 - GameState.levelTitleText.width / 2, 20);
     
-    // Mettre à jour le sous-titre et la date
-    const subtitleAndDate = currentLevel.subtitle + '\n' + currentLevel.date;
-    GameState.levelDateText.setText(subtitleAndDate);
-    GameState.levelDateText.setPosition(width / 2 - GameState.levelDateText.width / 2, 70);
+    // Mettre à jour le menu de navigation
+    updateLevelMenu();
 }
 
 // Création des éléments de niveau (textes, plateformes, etc.)
 export function createLevelElements(scene) {
     const width = scene.scale.width;
     
-    // Créer les textes pour afficher le niveau actuel (fixes par rapport à la caméra)
+    // Créer le texte pour afficher le niveau actuel (fixe par rapport à la caméra)
     GameState.levelTitleText = scene.add.text(0, 0, '', {
         fontSize: '32px',
         fill: '#ffffff',
@@ -30,12 +29,7 @@ export function createLevelElements(scene) {
         fontStyle: 'bold'
     }).setScrollFactor(0).setDepth(1000);
     
-    GameState.levelDateText = scene.add.text(0, 0, '', {
-        fontSize: '20px',
-        fill: '#ffff00',
-        stroke: '#000000',
-        strokeThickness: 3
-    }).setScrollFactor(0).setDepth(1000);
+    // Le texte jaune (date) a été retiré - les informations sont maintenant dans le menu en haut
     
     // Mettre à jour l'affichage du niveau initial
     updateLevelDisplay(scene);
