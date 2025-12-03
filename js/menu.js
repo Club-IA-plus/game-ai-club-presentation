@@ -15,9 +15,9 @@ export function createLevelMenu(scene) {
     const buttonHeight = 50; // Augmenté pour correspondre à la nouvelle hauteur
     const buttonSpacing = 5;
     
-    // Créer un fond complètement noir pour le menu
+    // Créer un fond noir semi-transparent pour le menu
     const totalMenuHeight = menuHeight + menuPadding * 2;
-    const menuBg = scene.add.rectangle(0, 0, scene.scale.width, totalMenuHeight, 0x000000, 1.0);
+    const menuBg = scene.add.rectangle(0, 0, scene.scale.width, totalMenuHeight, 0x000000, 0.7);
     menuBg.setOrigin(0, 0);
     menuBg.setScrollFactor(0); // Fixe par rapport à la caméra
     menuBg.setDepth(2000); // Au-dessus de tout

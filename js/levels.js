@@ -5,14 +5,7 @@ import { updateLevelMenu } from './menu.js';
 
 // Mise à jour de l'affichage du niveau actuel
 export function updateLevelDisplay(scene) {
-    const currentLevel = levels[GameState.currentLevelIndex];
-    const width = scene.scale.width;
-    
-    // Mettre à jour le titre du niveau
-    GameState.levelTitleText.setText(currentLevel.name);
-    GameState.levelTitleText.setPosition(width / 2 - GameState.levelTitleText.width / 2, 20);
-    
-    // Mettre à jour le menu de navigation
+    // Mettre à jour le menu de navigation (qui contient maintenant toutes les infos du niveau)
     updateLevelMenu();
 }
 
@@ -20,16 +13,7 @@ export function updateLevelDisplay(scene) {
 export function createLevelElements(scene) {
     const width = scene.scale.width;
     
-    // Créer le texte pour afficher le niveau actuel (fixe par rapport à la caméra)
-    GameState.levelTitleText = scene.add.text(0, 0, '', {
-        fontSize: '32px',
-        fill: '#ffffff',
-        stroke: '#000000',
-        strokeThickness: 4,
-        fontStyle: 'bold'
-    }).setScrollFactor(0).setDepth(1000);
-    
-    // Le texte jaune (date) a été retiré - les informations sont maintenant dans le menu en haut
+    // Les textes de niveau ont été retirés - les informations sont maintenant dans le menu en haut
     
     // Mettre à jour l'affichage du niveau initial
     updateLevelDisplay(scene);
