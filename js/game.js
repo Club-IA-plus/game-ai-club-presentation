@@ -1,8 +1,8 @@
-// Configuration du jeu Phaser 3
+// Configuration du jeu Phaser 3 - Plein écran
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
     parent: 'game-container',
     backgroundColor: '#2c3e50',
     physics: {
@@ -16,10 +16,19 @@ const config = {
         preload: preload,
         create: create,
         update: update
+    },
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     }
 };
 
 const game = new Phaser.Game(config);
+
+// Redimensionnement dynamique de la fenêtre
+window.addEventListener('resize', () => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+});
 
 let player;
 let cursors;
@@ -39,16 +48,22 @@ function preload() {
 }
 
 function create() {
-    // Créer les plateformes
+    const width = this.scale.width;
+    const height = this.scale.height;
+    
+    // Créer les plateformes (positions proportionnelles à la taille de la fenêtre)
     const platforms = this.physics.add.staticGroup();
     
-    platforms.create(400, 568, 'platform').setScale(1).refreshBody();
-    platforms.create(600, 400, 'platform');
-    platforms.create(50, 250, 'platform');
-    platforms.create(750, 220, 'platform');
+    // Plateforme principale au sol
+    platforms.create(width / 2, height - 32, 'platform').setScale(1).refreshBody();
+    
+    // Plateformes flottantes (positions adaptatives)
+    platforms.create(width * 0.75, height * 0.65, 'platform');
+    platforms.create(width * 0.1, height * 0.4, 'platform');
+    platforms.create(width * 0.9, height * 0.35, 'platform');
     
     // Créer le joueur
-    player = this.physics.add.sprite(100, 450, 'player');
+    player = this.physics.add.sprite(width * 0.15, height * 0.75, 'player');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     
@@ -60,7 +75,7 @@ function create() {
     
     // Instructions
     this.add.text(16, 16, 'Utilisez les flèches pour bouger', {
-        fontSize: '18px',
+        fontSize: Math.max(16, width / 50) + 'px',
         fill: '#ffffff'
     });
 }
