@@ -3,6 +3,7 @@ import { GameState } from './gameState.js';
 import { createLevel1Platforms } from './level1.js';
 import { createLevel2Platforms } from './level2.js';
 import { createLevel3Platforms } from './level3.js';
+import { createLevel4Snake } from './level4.js';
 import { updateLevelMenu } from './menu.js';
 
 // Mise à jour de l'affichage du niveau actuel
