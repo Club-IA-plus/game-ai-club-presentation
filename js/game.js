@@ -5,6 +5,7 @@ import { createPlayer, updatePlayer } from './player.js';
 import { createLevelElements, updateLevelDisplay, checkLevelChanges } from './levels.js';
 import { handleLevel2Platforms } from './level2.js';
 import { createLevelMenu } from './menu.js';
+import { initLevelMusic, updateAudio } from './audio.js';
 
 // Création de la scène principale
 function create() {
@@ -12,6 +13,9 @@ function create() {
     createPlayer(this);
     createLevelElements(this);
     createLevelMenu(this);
+    
+    // Initialiser la musique du premier niveau
+    initLevelMusic(this, 0);
 }
 
 // Mise à jour de la boucle de jeu
@@ -22,6 +26,9 @@ function update() {
     if (checkLevelChanges()) {
         updateLevelDisplay(this);
     }
+    
+    // Mettre à jour l'audio (transitions fluides)
+    updateAudio(this);
     
     // Gérer les interactions avec les plateformes du niveau 2
     handleLevel2Platforms();

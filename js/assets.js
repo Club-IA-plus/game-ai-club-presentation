@@ -184,5 +184,16 @@ export function preload() {
     
     // Charger l'image Gemini pour le fond du niveau 9
     this.load.image('geminiBackgroundLevel9', 'images/Gemini_level9.png');
+    
+    // Charger les musiques pour chaque niveau
+    this.load.audio('musicLevel1', 'sound/suno_level1.mp3');
+    this.load.audio('musicLevel2', 'sound/suno_level2.mp3');
+    this.load.audio('musicLevel3', 'sound/suno_level3.mp3');
+    this.load.audio('musicLevel4', 'sound/suno_level4.mp3');
+    this.load.audio('musicLevel5', 'sound/suno_level5.mp3');
+    this.load.audio('musicLevel6', 'sound/suno_level6.mp3');
+    this.load.audio('musicLevel7', 'sound/suno_level7.mp3');
+    this.load.audio('musicLevel8', 'sound/suno_level8.mp3');
+    this.load.audio('musicLevel9', 'sound/suno_level9.mp3');
 }
 
