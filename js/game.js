@@ -3,6 +3,7 @@ import { preload } from './assets.js';
 import { createWorld } from './world.js';
 import { createPlayer, updatePlayer } from './player.js';
 import { createLevelElements, updateLevelDisplay, checkLevelChanges } from './levels.js';
+import { handleLevel1Platforms } from './level1.js';
 import { handleLevel2Platforms } from './level2.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
@@ -33,6 +34,9 @@ function update() {
     
     // Mettre à jour l'audio (transitions fluides)
     updateAudio(this);
+    
+    // Gérer les interactions avec les plateformes du niveau 1
+    handleLevel1Platforms(this);
     
     // Gérer les interactions avec les plateformes du niveau 2
     handleLevel2Platforms();

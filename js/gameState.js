@@ -12,6 +12,11 @@ export const GameState = {
     platformData: [], // Stocker les données des plateformes pour détecter si le joueur est dessus
     chatGPTInterface: null, // Interface ChatGPT incrustée
     chatMessages: [], // Messages affichés dans l'interface
-    lastPlatformIndex: -1 // Dernière plateforme visitée
+    lastPlatformIndex: -1, // Dernière plateforme visitée
+    // Niveau 1 - Portraits des fondateurs
+    level1Platforms: null,
+    level1PlatformData: [],
+    lastLevel1PlatformIndex: -1,
+    level1InfoBubble: null // Bulle d'information affichée
 };
 
