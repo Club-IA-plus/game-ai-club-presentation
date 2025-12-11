@@ -167,8 +167,8 @@ export function preload() {
     // Charger l'image Gemini pour le fond du niveau 3
     this.load.image('geminiBackgroundLevel3', 'images/Gemini_level3.png');
     
-    // Charger l'image Midjourney pour le fond du niveau 4
-    this.load.image('geminiBackgroundLevel4', 'images/midjourney-level4.png');
+    // Charger l'image Gemini pour le fond du niveau 4
+    this.load.image('geminiBackgroundLevel4', 'images/Gemini_level4.png');
     
     // Charger l'image Midjourney pour le fond du niveau 5
     this.load.image('geminiBackgroundLevel5', 'images/midjourney-level5.png');
