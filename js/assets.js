@@ -169,5 +169,20 @@ export function preload() {
     
     // Charger l'image Midjourney pour le fond du niveau 4
     this.load.image('geminiBackgroundLevel4', 'images/midjourney-level4.png');
+    
+    // Charger l'image Midjourney pour le fond du niveau 5
+    this.load.image('geminiBackgroundLevel5', 'images/midjourney-level5.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 6
+    this.load.image('geminiBackgroundLevel6', 'images/Gemini_level6.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 7
+    this.load.image('geminiBackgroundLevel7', 'images/Gemini_level7.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 8
+    this.load.image('geminiBackgroundLevel8', 'images/Gemini_level8.png');
+    
+    // Charger l'image Gemini pour le fond du niveau 9
+    this.load.image('geminiBackgroundLevel9', 'images/Gemini_level9.png');
 }
 

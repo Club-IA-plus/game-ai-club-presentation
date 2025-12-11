@@ -45,6 +45,61 @@ export function createWorld(scene) {
     backgroundImageLevel4.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
     backgroundImageLevel4.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
+    // Ajouter l'image Midjourney comme fond du niveau 5 (en arrière-plan)
+    const level5 = levels[4]; // Cinquième niveau (index 4)
+    const level5StartX = level5.startX;
+    const level5EndX = level5.endX;
+    const level5Width = level5EndX - level5StartX;
+    const backgroundImageLevel5 = scene.add.image(level5StartX + level5Width / 2, height / 2, 'geminiBackgroundLevel5');
+    backgroundImageLevel5.setDisplaySize(level5Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel5.setOrigin(0.5, 0.5);
+    backgroundImageLevel5.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel5.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
+    // Ajouter l'image Gemini comme fond du niveau 6 (en arrière-plan)
+    const level6 = levels[5]; // Sixième niveau (index 5)
+    const level6StartX = level6.startX;
+    const level6EndX = level6.endX;
+    const level6Width = level6EndX - level6StartX;
+    const backgroundImageLevel6 = scene.add.image(level6StartX + level6Width / 2, height / 2, 'geminiBackgroundLevel6');
+    backgroundImageLevel6.setDisplaySize(level6Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel6.setOrigin(0.5, 0.5);
+    backgroundImageLevel6.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel6.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
+    // Ajouter l'image Gemini comme fond du niveau 7 (en arrière-plan)
+    const level7 = levels[6]; // Septième niveau (index 6)
+    const level7StartX = level7.startX;
+    const level7EndX = level7.endX;
+    const level7Width = level7EndX - level7StartX;
+    const backgroundImageLevel7 = scene.add.image(level7StartX + level7Width / 2, height / 2, 'geminiBackgroundLevel7');
+    backgroundImageLevel7.setDisplaySize(level7Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel7.setOrigin(0.5, 0.5);
+    backgroundImageLevel7.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel7.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
+    // Ajouter l'image Gemini comme fond du niveau 8 (en arrière-plan)
+    const level8 = levels[7]; // Huitième niveau (index 7)
+    const level8StartX = level8.startX;
+    const level8EndX = level8.endX;
+    const level8Width = level8EndX - level8StartX;
+    const backgroundImageLevel8 = scene.add.image(level8StartX + level8Width / 2, height / 2, 'geminiBackgroundLevel8');
+    backgroundImageLevel8.setDisplaySize(level8Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel8.setOrigin(0.5, 0.5);
+    backgroundImageLevel8.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel8.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
+    // Ajouter l'image Gemini comme fond du niveau 9 (en arrière-plan)
+    const level9 = levels[8]; // Neuvième niveau (index 8)
+    const level9StartX = level9.startX;
+    const level9EndX = level9.endX;
+    const level9Width = level9EndX - level9StartX;
+    const backgroundImageLevel9 = scene.add.image(level9StartX + level9Width / 2, height / 2, 'geminiBackgroundLevel9');
+    backgroundImageLevel9.setDisplaySize(level9Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel9.setOrigin(0.5, 0.5);
+    backgroundImageLevel9.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel9.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
     // Ajouter des nuages décoratifs sur toute la largeur du monde
     const clouds = scene.add.group();
     const numClouds = Math.floor(GameState.worldWidth / 200);
