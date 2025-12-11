@@ -6,6 +6,7 @@ import { createLevelElements, updateLevelDisplay, checkLevelChanges } from './le
 import { handleLevel2Platforms } from './level2.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
+import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
 
 // Création de la scène principale
 function create() {
@@ -13,6 +14,9 @@ function create() {
     createPlayer(this);
     createLevelElements(this);
     createLevelMenu(this);
+    
+    // Créer le bouton de volume
+    createVolumeButton(this);
     
     // Initialiser la musique du premier niveau
     initLevelMusic(this, 0);
@@ -47,4 +51,8 @@ const game = new Phaser.Game(config);
 // Redimensionnement dynamique de la fenêtre
 window.addEventListener('resize', () => {
     game.scale.resize(window.innerWidth, window.innerHeight);
+    // Mettre à jour la position du bouton de volume
+    if (game.scene.scenes[0]) {
+        updateVolumeButton(game.scene.scenes[0]);
+    }
 });

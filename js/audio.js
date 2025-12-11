@@ -10,7 +10,8 @@ const AudioState = {
     fadeOutDuration: 2000, // 2 secondes pour le fade out
     maxVolume: 0.6, // Volume maximum (60%)
     fadeTimer: null,
-    isTransitioning: false // Flag pour empêcher les transitions multiples
+    isTransitioning: false, // Flag pour empêcher les transitions multiples
+    isMuted: false // État du mute
 };
 
 // Initialiser la musique pour un niveau
@@ -31,8 +32,9 @@ export function initLevelMusic(scene, levelIndex) {
     scene.sound.stopByKey(musicKey);
     
     // Créer et jouer la nouvelle musique
+    const initialVolume = AudioState.isMuted ? 0 : AudioState.maxVolume;
     AudioState.currentMusic = scene.sound.add(musicKey, {
-        volume: AudioState.maxVolume,
+        volume: initialVolume,
         loop: true
     });
     
@@ -80,6 +82,11 @@ export function updateAudio(scene) {
     
     // Zone de fade out : les 20% finaux du niveau
     const fadeOutStart = 1 - AudioState.fadeOutZone;
+    
+    // Si le son est coupé, ne pas modifier le volume
+    if (AudioState.isMuted) {
+        return;
+    }
     
     if (progressInLevel >= fadeOutStart && progressInLevel <= 1) {
         // Fade out progressif dans la zone de transition
@@ -156,10 +163,11 @@ function startNewLevelMusic(scene, levelIndex) {
     AudioState.currentMusic.play();
     AudioState.currentLevelIndex = levelIndex;
     
-    // Fade in progressif
+    // Fade in progressif (ou volume 0 si muted)
+    const targetVolume = AudioState.isMuted ? 0 : AudioState.maxVolume;
     scene.tweens.add({
         targets: AudioState.currentMusic,
-        volume: AudioState.maxVolume,
+        volume: targetVolume,
         duration: AudioState.fadeInDuration,
         ease: 'Linear',
         onComplete: () => {
@@ -177,5 +185,55 @@ export function stopAllMusic(scene) {
     }
     AudioState.currentLevelIndex = -1;
     AudioState.isTransitioning = false;
+}
+
+// Activer/désactiver le son (mute/unmute)
+export function toggleMute(scene) {
+    AudioState.isMuted = !AudioState.isMuted;
+    
+    if (AudioState.isMuted) {
+        // Couper le son
+        if (AudioState.currentMusic && AudioState.currentMusic.isPlaying) {
+            AudioState.currentMusic.setVolume(0);
+        }
+        // Couper toutes les musiques
+        for (let i = 1; i <= 9; i++) {
+            const music = scene.sound.get(`musicLevel${i}`);
+            if (music) {
+                music.setVolume(0);
+            }
+        }
+    } else {
+        // Remettre le son
+        if (AudioState.currentMusic && AudioState.currentMusic.isPlaying) {
+            // Restaurer le volume selon la position dans le niveau
+            const playerX = GameState.player ? GameState.player.x : 0;
+            const currentLevel = levels[AudioState.currentLevelIndex];
+            
+            if (currentLevel) {
+                const levelWidth = currentLevel.endX - currentLevel.startX;
+                const playerPositionInLevel = playerX - currentLevel.startX;
+                const progressInLevel = playerPositionInLevel / levelWidth;
+                const fadeOutStart = 1 - AudioState.fadeOutZone;
+                
+                if (progressInLevel >= fadeOutStart && progressInLevel <= 1) {
+                    const fadeProgress = (progressInLevel - fadeOutStart) / AudioState.fadeOutZone;
+                    const targetVolume = AudioState.maxVolume * (1 - fadeProgress);
+                    AudioState.currentMusic.setVolume(Math.max(0, targetVolume));
+                } else {
+                    AudioState.currentMusic.setVolume(AudioState.maxVolume);
+                }
+            } else {
+                AudioState.currentMusic.setVolume(AudioState.maxVolume);
+            }
+        }
+    }
+    
+    return AudioState.isMuted;
+}
+
+// Obtenir l'état du mute
+export function isMuted() {
+    return AudioState.isMuted;
 }
 
