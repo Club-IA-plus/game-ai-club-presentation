@@ -19,7 +19,7 @@ make dev-build
 make dev-run
 ```
 
-Le jeu sera accessible sur http://localhost:8080
+Le jeu sera accessible sur http://localhost:8080 or http://51.178.80.14:8080
 
 ### Structure du projet
 

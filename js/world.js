@@ -34,6 +34,17 @@ export function createWorld(scene) {
     backgroundImageLevel3.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
     backgroundImageLevel3.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
+    // Ajouter l'image Midjourney comme fond du niveau 4 (en arrière-plan)
+    const level4 = levels[3]; // Quatrième niveau (index 3)
+    const level4StartX = level4.startX;
+    const level4EndX = level4.endX;
+    const level4Width = level4EndX - level4StartX;
+    const backgroundImageLevel4 = scene.add.image(level4StartX + level4Width / 2, height / 2, 'geminiBackgroundLevel4');
+    backgroundImageLevel4.setDisplaySize(level4Width, height); // Ajuster la taille pour couvrir tout le niveau
+    backgroundImageLevel4.setOrigin(0.5, 0.5);
+    backgroundImageLevel4.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
+    backgroundImageLevel4.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
+    
     // Ajouter des nuages décoratifs sur toute la largeur du monde
     const clouds = scene.add.group();
     const numClouds = Math.floor(GameState.worldWidth / 200);
