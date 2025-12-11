@@ -34,6 +34,9 @@ export function createWorld(scene) {
     backgroundImageLevel3.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
     backgroundImageLevel3.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
+    // Stocker la référence pour pouvoir appliquer des filtres depuis level3.js
+    GameState.level3BackgroundImage = backgroundImageLevel3;
+    
     // Ajouter l'image Midjourney comme fond du niveau 4 (en arrière-plan)
     const level4 = levels[3]; // Quatrième niveau (index 3)
     const level4StartX = level4.startX;

@@ -5,6 +5,7 @@ import { createPlayer, updatePlayer } from './player.js';
 import { createLevelElements, updateLevelDisplay, checkLevelChanges } from './levels.js';
 import { handleLevel1Platforms } from './level1.js';
 import { handleLevel2Platforms } from './level2.js';
+import { handleLevel3Platforms } from './level3.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
@@ -40,6 +41,9 @@ function update() {
     
     // Gérer les interactions avec les plateformes du niveau 2
     handleLevel2Platforms();
+    
+    // Gérer les interactions avec les plateformes du niveau 3
+    handleLevel3Platforms(this);
 }
 
 // Configuration de la scène

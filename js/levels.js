@@ -2,6 +2,7 @@ import { levels } from './config.js';
 import { GameState } from './gameState.js';
 import { createLevel1Platforms } from './level1.js';
 import { createLevel2Platforms } from './level2.js';
+import { createLevel3Platforms } from './level3.js';
 import { updateLevelMenu } from './menu.js';
 
 // Mise à jour de l'affichage du niveau actuel
@@ -22,6 +23,7 @@ export function createLevelElements(scene) {
     // Créer les plateformes et panneaux pour les niveaux spécifiques (après création du joueur)
     createLevel1Platforms(scene, width, scene.scale.height);
     createLevel2Platforms(scene, width, scene.scale.height);
+    createLevel3Platforms(scene, width, scene.scale.height);
 }
 
 // Vérification des changements de niveau

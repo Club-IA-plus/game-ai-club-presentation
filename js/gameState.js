@@ -17,6 +17,13 @@ export const GameState = {
     level1Platforms: null,
     level1PlatformData: [],
     lastLevel1PlatformIndex: -1,
-    level1InfoBubble: null // Bulle d'information affichée
+    level1InfoBubble: null, // Bulle d'information affichée
+    // Niveau 3 - Filtres Midjourney
+    level3Platforms: null,
+    level3PlatformData: [],
+    lastLevel3PlatformIndex: -1,
+    level3InfoBubble: null, // Bulle d'information affichée
+    level3BackgroundImage: null, // Référence à l'image de fond du niveau 3
+    level3FilterResetTimer: null // Timer pour éviter le clignotement
 };
 
