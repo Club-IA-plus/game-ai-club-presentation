@@ -33,6 +33,15 @@ export const GameState = {
     level5ContextDisplay: null, // Affichage du contexte collecté
     level5BarrierMessage: null, // Message de barrière
     level5Barrier: null, // Barrière à la fin du niveau
-    level5BarrierCollider: null // Collider de la barrière
+    level5BarrierCollider: null, // Collider de la barrière
+    // Niveau 6 - Collecte de sources (Notebook LM)
+    level6Platforms: null,
+    level6SourceData: [], // Données des sources
+    collectedSources: [], // Sources collectées
+    level6NotebookDisplay: null, // Affichage du notebook
+    level6Collider: null, // Collider des plateformes
+    level6Barrier: null, // Barrière à la fin du niveau
+    level6BarrierCollider: null, // Collider de la barrière
+    level6BarrierMessage: null // Message de barrière
 };
 
