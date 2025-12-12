@@ -24,6 +24,15 @@ export const GameState = {
     lastLevel3PlatformIndex: -1,
     level3InfoBubble: null, // Bulle d'information affichée
     level3BackgroundImage: null, // Référence à l'image de fond du niveau 3
-    level3FilterResetTimer: null // Timer pour éviter le clignotement
+    level3FilterResetTimer: null, // Timer pour éviter le clignotement
+    // Niveau 5 - Collecte de clés
+    level5Platforms: null,
+    level5Keys: null, // Groupe de clés
+    level5KeyData: [], // Données des clés
+    collectedKeys: [], // Clés collectées (indices)
+    level5ContextDisplay: null, // Affichage du contexte collecté
+    level5BarrierMessage: null, // Message de barrière
+    level5Barrier: null, // Barrière à la fin du niveau
+    level5BarrierCollider: null // Collider de la barrière
 };
 

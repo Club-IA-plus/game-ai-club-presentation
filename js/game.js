@@ -7,6 +7,7 @@ import { handleLevel1Platforms } from './level1.js';
 import { handleLevel2Platforms } from './level2.js';
 import { handleLevel3Platforms } from './level3.js';
 import { createLevel4Snake, updateLevel4Snake, destroyLevel4Snake } from './level4.js';
+import { handleLevel5Platforms, destroyLevel5, createLevel5Platforms } from './level5.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
@@ -39,6 +40,12 @@ function update() {
         if (GameState.currentLevelIndex !== 3) {
             destroyLevel4Snake();
         }
+        
+        // Réinitialiser le niveau 5 si on quitte le niveau 5
+        if (GameState.currentLevelIndex !== 4) {
+            destroyLevel5();
+        }
+        // Si on entre dans le niveau 5, les éléments seront créés dans handleLevel5Platforms
     }
     
     // Mettre à jour l'audio (transitions fluides)
@@ -55,6 +62,9 @@ function update() {
     
     // Mettre à jour le serpent du niveau 4 (créera les serpents si on entre dans le niveau)
     updateLevel4Snake(this);
+    
+    // Gérer les interactions avec les plateformes du niveau 5
+    handleLevel5Platforms(this);
 }
 
 // Configuration de la scène
