@@ -9,6 +9,7 @@ import { handleLevel3Platforms } from './level3.js';
 import { createLevel4Snake, updateLevel4Snake, destroyLevel4Snake } from './level4.js';
 import { handleLevel5Platforms, destroyLevel5, createLevel5Platforms } from './level5.js';
 import { handleLevel6Platforms, destroyLevel6 } from './level6.js';
+import { handleLevel7Platforms, destroyLevel7 } from './level7.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
@@ -26,6 +27,21 @@ function create() {
     
     // Initialiser la musique du premier niveau
     initLevelMusic(this, 0);
+    
+    // Debug : Afficher la position de la souris dans la console
+    this.input.on('pointermove', (pointer) => {
+        // Convertir les coordonnées de la caméra en coordonnées du monde
+        const worldX = this.cameras.main.scrollX + pointer.x;
+        const worldY = this.cameras.main.scrollY + pointer.y;
+        console.log(`Souris - Écran: (${pointer.x}, ${pointer.y}) | Monde: (${Math.round(worldX)}, ${Math.round(worldY)})`);
+    });
+    
+    // Debug : Afficher la position au clic pour plus de précision
+    this.input.on('pointerdown', (pointer) => {
+        const worldX = this.cameras.main.scrollX + pointer.x;
+        const worldY = this.cameras.main.scrollY + pointer.y;
+        console.log(`🖱️ CLIC - Écran: (${pointer.x}, ${pointer.y}) | Monde: (${Math.round(worldX)}, ${Math.round(worldY)})`);
+    });
 }
 
 // Mise à jour de la boucle de jeu
@@ -51,6 +67,11 @@ function update() {
         if (GameState.currentLevelIndex !== 5) {
             destroyLevel6();
         }
+        
+        // Réinitialiser le niveau 7 si on quitte le niveau 7
+        if (GameState.currentLevelIndex !== 6) {
+            destroyLevel7();
+        }
     }
     
     // Mettre à jour l'audio (transitions fluides)
@@ -73,6 +94,9 @@ function update() {
     
     // Gérer les interactions avec les plateformes du niveau 6
     handleLevel6Platforms(this);
+    
+    // Gérer les interactions avec les plateformes du niveau 7
+    handleLevel7Platforms(this);
 }
 
 // Configuration de la scène

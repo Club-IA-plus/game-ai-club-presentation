@@ -42,6 +42,17 @@ export const GameState = {
     level6Collider: null, // Collider des plateformes
     level6Barrier: null, // Barrière à la fin du niveau
     level6BarrierCollider: null, // Collider de la barrière
-    level6BarrierMessage: null // Message de barrière
+    level6BarrierMessage: null, // Message de barrière
+    // Niveau 7 - Construction de prompt (Prompt Engineering)
+    level7Platforms: null,
+    level7ImprovementData: [], // Données des améliorations
+    collectedImprovements: [], // Améliorations collectées
+    currentPrompt: '', // Prompt en construction
+    level7PromptDisplay: null, // Affichage du prompt
+    level7Collider: null, // Collider des plateformes
+    level7Barrier: null, // Barrière à la fin du niveau
+    level7BarrierCollider: null, // Collider de la barrière
+    level7BarrierMessage: null, // Message de barrière
+    level7Prisons: [] // Carrés/prisons représentant les catégories CRTF
 };
 
