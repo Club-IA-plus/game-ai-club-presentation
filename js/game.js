@@ -10,6 +10,7 @@ import { createLevel4Snake, updateLevel4Snake, destroyLevel4Snake } from './leve
 import { handleLevel5Platforms, destroyLevel5, createLevel5Platforms } from './level5.js';
 import { handleLevel6Platforms, destroyLevel6 } from './level6.js';
 import { handleLevel7Platforms, destroyLevel7 } from './level7.js';
+import { handleLevel8Elements, destroyLevel8 } from './level8.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
@@ -72,6 +73,11 @@ function update() {
         if (GameState.currentLevelIndex !== 6) {
             destroyLevel7();
         }
+        
+        // Réinitialiser le niveau 8 si on quitte le niveau 8
+        if (GameState.currentLevelIndex !== 7) {
+            destroyLevel8();
+        }
     }
     
     // Mettre à jour l'audio (transitions fluides)
@@ -97,6 +103,9 @@ function update() {
     
     // Gérer les interactions avec les plateformes du niveau 7
     handleLevel7Platforms(this);
+    
+    // Gérer les interactions avec les éléments du niveau 8
+    handleLevel8Elements(this);
 }
 
 // Configuration de la scène

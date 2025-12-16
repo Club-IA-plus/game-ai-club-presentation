@@ -53,6 +53,10 @@ export const GameState = {
     level7Barrier: null, // Barrière à la fin du niveau
     level7BarrierCollider: null, // Collider de la barrière
     level7BarrierMessage: null, // Message de barrière
-    level7Prisons: [] // Carrés/prisons représentant les catégories CRTF
+    level7Prisons: [], // Carrés/prisons représentant les catégories CRTF
+    // Niveau 8 - Révélation des pommes
+    level8Screens: [], // Écrans noirs qui cachent les pommes
+    level8Apples: [], // Pommes collectables
+    collectedApples: [] // Pommes collectées (indices)
 };
 
