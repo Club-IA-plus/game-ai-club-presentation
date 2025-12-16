@@ -16,6 +16,7 @@ import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
 import { createPdfButton, updatePdfButton } from './pdfButton.js';
+import { destroyChatGPTInterface } from './chatGPT.js';
 import { GameState } from './gameState.js';
 
 // Création de la scène principale
@@ -82,6 +83,11 @@ function update() {
         // Réinitialiser le niveau 8 si on quitte le niveau 8
         if (GameState.currentLevelIndex !== 7) {
             destroyLevel8();
+        }
+        
+        // Détruire l'interface ChatGPT si on quitte le niveau 2
+        if (GameState.currentLevelIndex !== 1) {
+            destroyChatGPTInterface();
         }
     }
     

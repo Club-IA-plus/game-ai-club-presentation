@@ -1,6 +1,6 @@
 import { levels } from './config.js';
 import { GameState } from './gameState.js';
-import { createChatGPTInterface, addChatMessage, clearChatMessagesAfter } from './chatGPT.js';
+import { createChatGPTInterface, addChatMessage, clearChatMessagesAfter, destroyChatGPTInterface } from './chatGPT.js';
 
 // Messages de conversation pour le niveau 2 (8 phrases uniques, une par plateforme)
 const conversationMessages = [
@@ -22,6 +22,12 @@ export function createLevel2Platforms(scene, width, height) {
     const level2EndX = level2.endX;
     const level2Width = level2EndX - level2StartX;
     
+    // Réinitialiser l'état du niveau 2 si on revient dessus
+    if (GameState.chatGPTInterface) {
+        destroyChatGPTInterface();
+    }
+    GameState.lastPlatformIndex = -1;
+    
     // Ajouter l'image Gemini comme fond du niveau 2 (en arrière-plan)
     const backgroundImage = scene.add.image(level2StartX + level2Width / 2, height / 2, 'geminiBackground');
     backgroundImage.setDisplaySize(level2Width, height); // Ajuster la taille pour couvrir tout le niveau
@@ -29,13 +35,14 @@ export function createLevel2Platforms(scene, width, height) {
     backgroundImage.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
     backgroundImage.setAlpha(0.8); // Légère transparence pour laisser voir un peu le ciel
     
-    // Créer l'interface ChatGPT
+    // Créer l'interface ChatGPT (uniquement pour le niveau 2)
     createChatGPTInterface(scene, level2StartX, level2Width, height);
     
     // Créer un groupe de plateformes pour ce niveau
-    GameState.platforms = scene.physics.add.staticGroup();
+    if (!GameState.platforms) {
+        GameState.platforms = scene.physics.add.staticGroup();
+    }
     GameState.platformData = [];
-    GameState.lastPlatformIndex = -1;
     
     // Créer 8 plateformes en escalier (presque collées sur l'axe X)
     const numPlatforms = 8;
@@ -71,7 +78,25 @@ export function createLevel2Platforms(scene, width, height) {
 
 // Gestion des interactions avec les plateformes du niveau 2
 export function handleLevel2Platforms() {
-    if (!GameState.player || GameState.currentLevelIndex !== 1 || GameState.platformData.length === 0 || !GameState.chatGPTInterface) {
+    // Si on n'est pas sur le niveau 2, détruire l'interface ChatGPT
+    if (GameState.currentLevelIndex !== 1) {
+        if (GameState.chatGPTInterface) {
+            destroyChatGPTInterface();
+        }
+        // Réinitialiser l'état du niveau 2
+        GameState.lastPlatformIndex = -1;
+        return;
+    }
+    
+    // S'assurer que l'interface ChatGPT existe (au cas où elle n'aurait pas été créée)
+    if (!GameState.chatGPTInterface) {
+        const level2 = levels[1];
+        const level2StartX = level2.startX;
+        const level2Width = level2.endX - level2.startX;
+        createChatGPTInterface(GameState.player.scene, level2StartX, level2Width, GameState.player.scene.scale.height);
+    }
+    
+    if (!GameState.player || GameState.platformData.length === 0 || !GameState.chatGPTInterface) {
         return;
     }
     
@@ -105,10 +130,29 @@ export function handleLevel2Platforms() {
         }
         
         // Afficher le message de cette plateforme (si on avance ou si c'est la première)
-        if (currentPlatformIndex > GameState.lastPlatformIndex || GameState.lastPlatformIndex === -1) {
+        // Vérifier si le message existe déjà dans l'historique (pour permettre de revenir sur les plateformes)
+        const existingMessage = GameState.chatGPTInterface.messages[currentPlatformIndex];
+        if (existingMessage) {
+            // Réafficher le message existant
+            if (existingMessage.graphics) {
+                existingMessage.graphics.setVisible(true);
+                existingMessage.graphics.setAlpha(1.0);
+            }
+            if (existingMessage.text) {
+                existingMessage.text.setVisible(true);
+                existingMessage.text.setAlpha(1.0);
+            }
+            // Masquer les messages après celui-ci
+            for (let i = currentPlatformIndex + 1; i < GameState.chatGPTInterface.messages.length; i++) {
+                const msg = GameState.chatGPTInterface.messages[i];
+                if (msg.graphics) msg.graphics.setVisible(false);
+                if (msg.text) msg.text.setVisible(false);
+            }
+        } else if (currentPlatformIndex > GameState.lastPlatformIndex || GameState.lastPlatformIndex === -1) {
+            // Créer un nouveau message
             addChatMessage(GameState.platformData[currentPlatformIndex].message);
-            GameState.lastPlatformIndex = currentPlatformIndex;
         }
+        GameState.lastPlatformIndex = currentPlatformIndex;
     }
     
     // Si le joueur n'est plus sur une plateforme et qu'on recule, effacer les messages
