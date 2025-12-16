@@ -195,5 +195,8 @@ export function preload() {
     this.load.audio('musicLevel7', 'sound/suno_level7.mp3');
     this.load.audio('musicLevel8', 'sound/suno_level8.mp3');
     this.load.audio('musicLevel9', 'sound/suno_level9.mp3');
+    
+    // Charger l'image du personnage narrateur
+    this.load.image('narrator', 'images/pixel-avatar-gameboy-256px-removebg-preview.png');
 }
 

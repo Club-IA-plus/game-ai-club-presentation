@@ -65,6 +65,8 @@ export const GameState = {
     level9InfoBubble: null, // Bulle d'information affichée
     currentAudioFilter: null, // Filtre audio actuel
     level9AudioTween: null, // Tween pour les transitions audio
-    level9FilterResetTimer: null // Timer pour éviter le clignotement
+    level9FilterResetTimer: null, // Timer pour éviter le clignotement
+    // Narrateur
+    narrator: null // Personnage narrateur au début du jeu
 };
 

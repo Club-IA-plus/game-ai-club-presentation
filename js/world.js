@@ -9,6 +9,9 @@ export function createWorld(scene) {
     // Calculer la largeur totale du monde (dernier niveau)
     GameState.worldWidth = levels[levels.length - 1].endX;
     
+    // Créer le personnage narrateur au tout début du jeu
+    createNarrator(scene, width, height);
+    
     // Créer le fond avec un ciel dégradé (sur toute la largeur du monde)
     scene.add.rectangle(0, 0, GameState.worldWidth, height, 0x87CEEB).setOrigin(0, 0);
     
@@ -146,5 +149,56 @@ export function createWorld(scene) {
         });
         levelNumber.setOrigin(0, 0);
     }
+}
+
+// Créer le personnage narrateur au début du jeu (niveau 1 uniquement)
+function createNarrator(scene, width, height) {
+    // Position du panneau : en haut à gauche du niveau 1
+    const level1 = levels[0]; // Premier niveau
+    const level1StartX = level1.startX;
+    
+    const panelX = level1StartX + 20; // 20px depuis le début du niveau 1
+    const panelY = 80; // 80px depuis le haut (sous le menu)
+    const panelWidth = 700;
+    const panelHeight = 200;
+    
+    // Créer le panneau blanc (encadré)
+    const panelBg = scene.add.graphics();
+    panelBg.fillStyle(0xFFFFFF, 0.95);
+    panelBg.fillRoundedRect(panelX, panelY, panelWidth, panelHeight, 10);
+    panelBg.lineStyle(3, 0x000000);
+    panelBg.strokeRoundedRect(panelX, panelY, panelWidth, panelHeight, 10);
+    panelBg.setDepth(2000);
+    
+    // Créer le sprite du narrateur à gauche du panneau
+    const narratorX = panelX + 100; // 100px depuis le bord gauche du panneau
+    const narratorY = panelY + panelHeight / 2; // Centré verticalement dans le panneau
+    
+    const narrator = scene.add.image(narratorX, narratorY, 'narrator');
+    narrator.setOrigin(0.5, 0.5); // Centré
+    narrator.setScale(0.4); // Taille ajustée pour le panneau
+    narrator.setDepth(2001);
+    
+    // Texte à droite du panneau
+    const textX = panelX + 250; // 250px depuis le bord gauche du panneau (à droite du sprite)
+    const textY = panelY + panelHeight / 2; // Centré verticalement
+    
+    const messageText = "Le Club IA+ a été créé pour aider les IAtiens à comprendre l'intelligence artificielle et à apprendre à l'utiliser. Aujourd'hui, c'est à ton tour. Termine le chemin qui se dresse devant toi et marche à ton tour sur les traces des IAtiens.";
+    
+    const text = scene.add.text(textX, textY, messageText, {
+        fontSize: '14px',
+        fill: '#000000',
+        wordWrap: { width: panelWidth - 280 }, // Largeur disponible pour le texte
+        align: 'left'
+    });
+    text.setOrigin(0, 0.5); // Ancré à gauche, centré verticalement
+    text.setDepth(2001);
+    
+    // Stocker les références pour pouvoir les détruire si nécessaire
+    GameState.narrator = {
+        panelBg: panelBg,
+        sprite: narrator,
+        text: text
+    };
 }
 
