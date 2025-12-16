@@ -73,7 +73,9 @@ export function createChatGPTInterface(scene, level2StartX, level2Width, height)
         interfaceHeight: interfaceHeight,
         level2StartX: level2StartX, // Stocker pour référence
         level2Width: level2Width, // Stocker pour référence
-        elements: interfaceElements // Stocker les éléments pour pouvoir les détruire
+        elements: interfaceElements, // Stocker les éléments pour pouvoir les détruire
+        messagesAreaTop: interfaceY + 110, // Limite supérieure de la zone de messages
+        messagesAreaBottom: interfaceY + 110 + messagesAreaHeight - 20 // Limite inférieure de la zone de messages
     };
 }
 
@@ -162,31 +164,144 @@ export function addChatMessage(messageData) {
         graphics: bubbleGraphics,
         text: msgText,
         index: GameState.chatGPTInterface.messages.length,
-        height: bubbleHeight
+        height: bubbleHeight,
+        originalY: messageY // Stocker la position Y originale
     });
     
     // Déplacer la position Y pour le prochain message (avec espacement)
     GameState.chatGPTInterface.currentY += bubbleHeight + 20; // Espacement de 20px entre les messages
+    
+    // Vérifier si le dernier message dépasse la zone visible et faire défiler vers le haut
+    updateMessagesScroll();
 }
 
-// Fonction pour effacer les messages après un certain index
+// Mettre à jour le scroll des messages pour garder l'historique visible
+function updateMessagesScroll() {
+    if (!GameState.chatGPTInterface || GameState.chatGPTInterface.messages.length === 0) {
+        return;
+    }
+    
+    const messagesAreaBottom = GameState.chatGPTInterface.messagesAreaBottom;
+    const messagesAreaTop = GameState.chatGPTInterface.messagesAreaTop;
+    
+    // Vérifier si le dernier message dépasse la zone visible
+    const lastMessage = GameState.chatGPTInterface.messages[GameState.chatGPTInterface.messages.length - 1];
+    if (!lastMessage || !lastMessage.text) {
+        return;
+    }
+    
+    const lastMessageBottom = lastMessage.text.y + lastMessage.height / 2;
+    
+    // Si le dernier message dépasse, faire défiler tous les messages vers le haut
+    if (lastMessageBottom > messagesAreaBottom) {
+        const overflow = lastMessageBottom - messagesAreaBottom;
+        
+        // Déplacer tous les messages vers le haut
+        GameState.chatGPTInterface.messages.forEach(msg => {
+            if (msg.graphics) {
+                msg.graphics.y -= overflow;
+            }
+            if (msg.text) {
+                msg.text.y -= overflow;
+            }
+        });
+        
+        // Ajuster la position Y actuelle pour le prochain message
+        GameState.chatGPTInterface.currentY -= overflow;
+        
+        // Masquer les messages qui sont maintenant complètement hors de la zone visible (en haut)
+        // Mais NE PAS les détruire pour garder l'historique
+        GameState.chatGPTInterface.messages.forEach(msg => {
+            if (msg.text) {
+                const msgTop = msg.text.y - msg.height / 2;
+                const msgBottom = msg.text.y + msg.height / 2;
+                
+                // Masquer si complètement hors de la zone visible
+                if (msgBottom < messagesAreaTop || msgTop > messagesAreaBottom) {
+                    if (msg.graphics) msg.graphics.setVisible(false);
+                    if (msg.text) msg.text.setVisible(false);
+                } else {
+                    // Afficher si au moins partiellement visible
+                    if (msg.graphics) msg.graphics.setVisible(true);
+                    if (msg.text) msg.text.setVisible(true);
+                }
+            }
+        });
+    } else {
+        // S'assurer que tous les messages visibles sont affichés
+        GameState.chatGPTInterface.messages.forEach(msg => {
+            if (msg.text) {
+                const msgTop = msg.text.y - msg.height / 2;
+                const msgBottom = msg.text.y + msg.height / 2;
+                
+                // Afficher si au moins partiellement dans la zone visible
+                if (msgBottom >= messagesAreaTop && msgTop <= messagesAreaBottom) {
+                    if (msg.graphics) {
+                        msg.graphics.setVisible(true);
+                        msg.graphics.setAlpha(1.0);
+                    }
+                    if (msg.text) {
+                        msg.text.setVisible(true);
+                        msg.text.setAlpha(1.0);
+                    }
+                } else {
+                    // Masquer si complètement hors de la zone visible
+                    if (msg.graphics) msg.graphics.setVisible(false);
+                    if (msg.text) msg.text.setVisible(false);
+                }
+            }
+        });
+    }
+}
+
+// Fonction pour masquer les messages après un certain index (garder l'historique)
 export function clearChatMessagesAfter(index) {
     if (!GameState.chatGPTInterface) return;
     
-    // Effacer tous les messages après l'index spécifié
+    // Masquer tous les messages après l'index spécifié (mais ne pas les détruire pour garder l'historique)
     for (let i = GameState.chatGPTInterface.messages.length - 1; i > index; i--) {
         const msg = GameState.chatGPTInterface.messages[i];
-        if (msg.graphics) msg.graphics.destroy();
-        if (msg.text) msg.text.destroy();
-        GameState.chatGPTInterface.messages.pop();
+        if (msg.graphics) msg.graphics.setVisible(false);
+        if (msg.text) msg.text.setVisible(false);
     }
     
-    // Réajuster la position Y
-    if (GameState.chatGPTInterface.messages.length > 0) {
-        const lastMsg = GameState.chatGPTInterface.messages[GameState.chatGPTInterface.messages.length - 1];
-        GameState.chatGPTInterface.currentY = lastMsg.text.y + (lastMsg.height / 2) + 20;
+    // Réafficher tous les messages jusqu'à l'index (pour s'assurer qu'ils sont visibles)
+    for (let i = 0; i <= index && i < GameState.chatGPTInterface.messages.length; i++) {
+        const msg = GameState.chatGPTInterface.messages[i];
+        if (msg.graphics) {
+            msg.graphics.setVisible(true);
+            msg.graphics.setAlpha(1.0);
+        }
+        if (msg.text) {
+            msg.text.setVisible(true);
+            msg.text.setAlpha(1.0);
+        }
+    }
+    
+    // Réajuster la position Y pour le prochain message
+    if (index >= 0 && index < GameState.chatGPTInterface.messages.length) {
+        const lastVisibleMsg = GameState.chatGPTInterface.messages[index];
+        GameState.chatGPTInterface.currentY = lastVisibleMsg.text.y + (lastVisibleMsg.height / 2) + 20;
+    } else if (GameState.chatGPTInterface.messages.length > 0) {
+        // Si index est -1, trouver le dernier message visible
+        let lastVisibleIndex = -1;
+        for (let i = GameState.chatGPTInterface.messages.length - 1; i >= 0; i--) {
+            if (GameState.chatGPTInterface.messages[i].text && GameState.chatGPTInterface.messages[i].text.visible) {
+                lastVisibleIndex = i;
+                break;
+            }
+        }
+        if (lastVisibleIndex >= 0) {
+            const lastVisibleMsg = GameState.chatGPTInterface.messages[lastVisibleIndex];
+            GameState.chatGPTInterface.currentY = lastVisibleMsg.text.y + (lastVisibleMsg.height / 2) + 20;
+        } else {
+            GameState.chatGPTInterface.currentY = GameState.chatGPTInterface.startY;
+        }
     } else {
         GameState.chatGPTInterface.currentY = GameState.chatGPTInterface.startY;
     }
+    
+    // Mettre à jour le scroll après masquage
+    updateMessagesScroll();
 }
 
