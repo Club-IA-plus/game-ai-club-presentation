@@ -75,7 +75,7 @@ export function createWorld(scene) {
     const level7StartX = level7.startX;
     const level7EndX = level7.endX;
     const level7Width = level7EndX - level7StartX;
-    const backgroundImageLevel7 = scene.add.image(level7StartX + level7Width / 2, height / 2, 'geminiBackgroundLevel7');
+    const backgroundImageLevel7 = scene.add.image(level7StartX + level7Width / 2, height / 2 - 25, 'geminiBackgroundLevel7'); // Remonté de 25px
     backgroundImageLevel7.setDisplaySize(level7Width, height); // Ajuster la taille pour couvrir tout le niveau
     backgroundImageLevel7.setOrigin(0.5, 0.5);
     backgroundImageLevel7.setDepth(0); // Profondeur la plus basse pour être en arrière-plan
