@@ -15,6 +15,7 @@ import { handleLevel9Platforms } from './level9.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
+import { createPdfButton, updatePdfButton } from './pdfButton.js';
 import { GameState } from './gameState.js';
 
 // Création de la scène principale
@@ -26,6 +27,9 @@ function create() {
     
     // Créer le bouton de volume
     createVolumeButton(this);
+    
+    // Créer le bouton fichier PDF
+    createPdfButton(this);
     
     // Initialiser la musique du premier niveau
     initLevelMusic(this, 0);
@@ -125,8 +129,9 @@ const game = new Phaser.Game(config);
 // Redimensionnement dynamique de la fenêtre
 window.addEventListener('resize', () => {
     game.scale.resize(window.innerWidth, window.innerHeight);
-    // Mettre à jour la position du bouton de volume
+    // Mettre à jour la position du bouton de volume et du bouton PDF
     if (game.scene.scenes[0]) {
         updateVolumeButton(game.scene.scenes[0]);
+        updatePdfButton(game.scene.scenes[0]);
     }
 });
