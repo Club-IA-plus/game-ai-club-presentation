@@ -251,7 +251,8 @@ function createPromptDisplay(scene, height) {
     promptPanel.setDepth(2500);
     promptPanel.setScrollFactor(0);
     
-    const promptTitle = scene.add.text(panelX, panelY - 100, "💡 Prompt en construction", {
+    // Titre en haut du panneau
+    const promptTitle = scene.add.text(panelX, panelY - panelHeight / 2 + 20, "💡 Prompt en construction", {
         fontSize: '18px',
         fill: '#FFFFFF',
         fontStyle: 'bold'
@@ -260,7 +261,8 @@ function createPromptDisplay(scene, height) {
     promptTitle.setDepth(2501);
     promptTitle.setScrollFactor(0);
     
-    const scoreText = scene.add.text(panelX, panelY - 70, "Qualité: 0%", {
+    // Score juste en dessous du titre
+    const scoreText = scene.add.text(panelX, panelY - panelHeight / 2 + 50, "Qualité: 0%", {
         fontSize: '16px',
         fill: '#FFD700',
         fontStyle: 'bold',
@@ -271,7 +273,8 @@ function createPromptDisplay(scene, height) {
     scoreText.setDepth(2501);
     scoreText.setScrollFactor(0);
     
-    const promptText = scene.add.text(panelX - panelWidth / 2 + 15, panelY - panelHeight / 2 + 50, basePrompt, {
+    // Texte du prompt en dessous du score (avec espacement)
+    const promptText = scene.add.text(panelX - panelWidth / 2 + 15, panelY - panelHeight / 2 + 80, basePrompt, {
         fontSize: '11px',
         fill: '#FFFFFF',
         wordWrap: { width: panelWidth - 30 },
@@ -282,6 +285,7 @@ function createPromptDisplay(scene, height) {
     promptText.setDepth(2501);
     promptText.setScrollFactor(0);
     
+    // Indicateur CRTF en bas du panneau
     const categoriesText = scene.add.text(panelX, panelY + panelHeight / 2 - 20, "CRTF: 0/5", {
         fontSize: '14px',
         fill: '#10A37F',
