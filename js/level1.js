@@ -182,8 +182,8 @@ export function handleLevel1Platforms(scene) {
 // Afficher la bulle d'information d'un fondateur
 function showFounderInfo(scene, platformData) {
     const { platformX, platformY, founder } = platformData;
-    const bubbleWidth = 400;
-    const bubbleHeight = 180;
+    const bubbleWidth = 450; // Largeur augmentée pour accommoder les textes longs
+    const bubbleHeight = 200; // Hauteur augmentée si nécessaire
     
     // Position de la bulle dans le monde
     const bubbleX = platformX;
@@ -212,11 +212,13 @@ function showFounderInfo(scene, platformData) {
     nameText.setOrigin(0.5, 0.5);
     nameText.setDepth(1002);
     
-    // Rôle du fondateur
+    // Rôle du fondateur (avec wordWrap pour éviter le débordement)
     const roleText = scene.add.text(0, -25, founder.role, {
-        fontSize: '18px',
+        fontSize: '16px', // Taille réduite légèrement
         fill: '#666666',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        wordWrap: { width: bubbleWidth - 40 }, // WordWrap pour forcer le retour à la ligne
+        align: 'center'
     });
     roleText.setOrigin(0.5, 0.5);
     roleText.setDepth(1002);
