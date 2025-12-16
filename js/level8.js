@@ -69,7 +69,7 @@ export function createLevel8Elements(scene, width, height) {
         // Si aucune position n'est définie, utiliser les positions X des écrans
         const applesToCreate = applePositions.length > 0 ? applePositions : screenPositions.map((screen, idx) => ({
             x: screen.x,
-            y: height - 150, // 150 pixels du bas
+            y: height - 250, // 250 pixels du bas (remontées pour nécessiter un saut)
             index: idx
         }));
         
