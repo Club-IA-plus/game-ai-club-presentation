@@ -8,6 +8,7 @@ import { createLevel5Platforms } from './level5.js';
 import { createLevel6Platforms } from './level6.js';
 import { createLevel7Platforms } from './level7.js';
 import { createLevel8Elements } from './level8.js';
+import { createLevel9Platforms } from './level9.js';
 import { updateLevelMenu } from './menu.js';
 
 // Mise à jour de l'affichage du niveau actuel
@@ -33,6 +34,7 @@ export function createLevelElements(scene) {
     createLevel6Platforms(scene, width, scene.scale.height);
     createLevel7Platforms(scene, width, scene.scale.height);
     createLevel8Elements(scene, width, scene.scale.height);
+    createLevel9Platforms(scene, width, scene.scale.height);
 }
 
 // Vérification des changements de niveau

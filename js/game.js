@@ -11,6 +11,7 @@ import { handleLevel5Platforms, destroyLevel5, createLevel5Platforms } from './l
 import { handleLevel6Platforms, destroyLevel6 } from './level6.js';
 import { handleLevel7Platforms, destroyLevel7 } from './level7.js';
 import { handleLevel8Elements, destroyLevel8 } from './level8.js';
+import { handleLevel9Platforms } from './level9.js';
 import { createLevelMenu } from './menu.js';
 import { initLevelMusic, updateAudio } from './audio.js';
 import { createVolumeButton, updateVolumeButton } from './volumeButton.js';
@@ -106,6 +107,9 @@ function update() {
     
     // Gérer les interactions avec les éléments du niveau 8
     handleLevel8Elements(this);
+    
+    // Gérer les interactions avec les plateformes du niveau 9
+    handleLevel9Platforms(this);
 }
 
 // Configuration de la scène

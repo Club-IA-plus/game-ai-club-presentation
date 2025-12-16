@@ -57,6 +57,14 @@ export const GameState = {
     // Niveau 8 - Révélation des pommes
     level8Screens: [], // Écrans noirs qui cachent les pommes
     level8Apples: [], // Pommes collectables
-    collectedApples: [] // Pommes collectées (indices)
+    collectedApples: [], // Pommes collectées (indices)
+    // Niveau 9 - Filtres audio Suno
+    level9Platforms: null,
+    level9PlatformData: [],
+    lastLevel9PlatformIndex: -1,
+    level9InfoBubble: null, // Bulle d'information affichée
+    currentAudioFilter: null, // Filtre audio actuel
+    level9AudioTween: null, // Tween pour les transitions audio
+    level9FilterResetTimer: null // Timer pour éviter le clignotement
 };
 
